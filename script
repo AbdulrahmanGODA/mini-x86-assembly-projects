@@ -1,0 +1,3 @@
+git remote add origin git@github.com:AbdulrahmanGODA/mini-x86-assembly-projects.git
+git branch -M main
+git push -u origin main

@@ -1,0 +1,4 @@
+nasm -f bin main.asm -o main.bin
+echo "Converted to Binary"
+qemu-system-x86_64 main.bin
+echo "Done"
