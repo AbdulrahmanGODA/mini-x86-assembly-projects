@@ -1,48 +1,57 @@
 org 0x7c00
-buffer:
-	times 10 db 0
-string:
-	db "Enter a Name: ", 0
-
-	mov ah, 0x00
-	mov al, 0x02
-	int 0x10
-
-	mov bx, [string]
-	call print
-
-	mov bx, [buffer]
+bits 16 
 
 main:
-	mov ah, 0x00
-	int 0x16
-	cmp al, '0'
-	je done
+	call clear
+	mov bx, string1
+	call print
+	call write
+	call clear
+	mov bx, string2
+	call print
+	mov bx, buffer
+	call print
+	call printNL
+	call write	
+jmp $
 
-	mov ah, 0x0e
-	int 0x10
-	mov [bx], al
-	inc bx
-	jmp main
-done:
-	mov [bx], al
-	mov bx, [buffer]
+clear:
 	mov ah, 0x00
 	mov al, 0x02
 	int 0x10
+	ret
 
+write:	mov bx, buffer
+wloop:	mov ah, 0x00
+	int 0x16
+	mov [bx], al
+	cmp al, '0'
+	je endw
+	mov ah, 0x0e
+	int 0x10
+	inc bx
+	jmp wloop
+	endw: ret
 print:
 	mov ah, 0x0e
 	mov al, [bx]
 	cmp al, '0'
-	je exit
+	je endp
 	int 0x10
 	inc bx
 	jmp print
-exit:
-	ret
+	endp: ret
+printNL:
+	mov ah, 0x0e
+	mov al, 0x0a
+	int 0x10
+	mov al, 0x0d
+	int 0x10
+	ret	
 
+string1: db "Enter a Name: ", '0'
+string2: db "Welcome ", '0' 
+buffer: times 16 db 0
 
-jmp $
 times 510-($-$$) db 0
-db 0x0055, 0x00aa
+db 0x55, 0xaa
