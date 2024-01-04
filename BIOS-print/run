@@ -1,4 +1,10 @@
 nasm -f bin main.asm -o main.bin
-echo "Converted to Binary"
-qemu-system-x86_64 main.bin
-echo "Done"
+	echo "DONE...main.bin Created"
+dd if=/dev/zero of=main.img bs=512 count=2880
+	echo "DONE...main.img Created"
+mkfs.fat -F 12 -n "GOOS" main.img
+	echo "DONE...Formated to FAT12"
+dd if=main.bin of=main.img conv=notrunc
+	echo "DONE...Copied No Truncate"
+qemu-system-x86_64 main.img
+	echo "DONE..."

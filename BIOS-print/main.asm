@@ -1,6 +1,24 @@
 org 0x7c00
 bits 16 
 
+jmp short main
+nop
+
+db "RhYn0v01" ;OEM Name
+dw 512 ;Bytes Per Sector
+db 1 ;Sectors Per Cluster
+dw 1 ;Reserved Sector Count - 1 For BootSector
+db 2 ;Number of File Allocation Tables
+dw 160 ;Max number of Root Entries (16 * 10)
+dw 80 * 2 * 18 ;Total Sectors
+db 0xF0 ;Media Descriptor
+dw 10 ;Sectors Per FAT
+dw 18 ;Sectors Per Track
+dw 2 ;Number of Heads
+dd 0 ;Number of Hidden Sectors
+dd 0
+db 0,0,0x29,0x12,0x34,0x56,0x78,'GODA OS    ','FAT12   '
+
 main:
 	call clear
 	mov bx, string1
