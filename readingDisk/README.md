@@ -1,0 +1,1 @@
+RUN THE BASH SCRIPT "run"
